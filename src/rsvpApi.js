@@ -1,9 +1,9 @@
 const BASE_URL = process.env.NODE_ENV === 'development' ?
-    'http://localhost:8080' : 'https://ski-be-hgfltltt5a-de.a.run.app'
+    'http://localhost:8080' : 'https://rsvp-yo-4lec554gkq-as.a.run.app'
 
 export const rsvpApi = {
     add: async (rsvp) => {
-        const response = await fetch(
+        await fetch(
             `${BASE_URL}/api/rsvp`,
             {
                 method: 'POST',
@@ -15,7 +15,5 @@ export const rsvpApi = {
             
             },
         );
-        const jsonResponse = await response.json();
-        return jsonResponse;
     }
 };

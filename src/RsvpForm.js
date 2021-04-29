@@ -4,13 +4,29 @@ import './App.css';
 import 'semantic-ui-css/semantic.min.css'
 import { useForm } from 'react-hook-form';
 import { rsvpApi } from './rsvpApi';
+import { Snackbar } from '@material-ui/core';
+import { useState } from 'react';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+import { Alert } from './Alert';
 
 export const RsvpForm = () => {
-    const { handleSubmit, register, watch } = useForm();
+    const { handleSubmit, register, reset } = useForm();
+    const [toastOpen, setToastOpen] = useState(false);
 
-    const onSubmit = (rsvp) => {
-        rsvpApi.add(rsvp);
+    const onSubmit = async (rsvp) => {
+        await rsvpApi.add(rsvp);
+        setToastOpen(true);
+        reset();
     };
+
+    const handleToastClose = (_, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setToastOpen(false);
+    };
+
 
     return (
         <Container fluid className="container">
@@ -18,7 +34,7 @@ export const RsvpForm = () => {
             <Form className="form" onSubmit={handleSubmit(onSubmit)}>
                 <Form.Field>
                     <label>Name</label>
-                    <input placeholder='Enter your name' {...register('name')}/>
+                    <input placeholder='Enter your name' {...register('name')} />
                 </Form.Field>
                 <Form.Field>
                     <label>Attendees</label>
@@ -31,6 +47,17 @@ export const RsvpForm = () => {
 
                 <Button color="blue" type='submit'>Submit</Button>
             </Form>
+            <Snackbar
+                anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'center',
+                }}
+                open={toastOpen}
+                autoHideDuration={2000}
+                onClose={handleToastClose}
+            >
+                <Alert severity="success">gotcha thanks &#127773;</Alert>
+            </Snackbar>
         </Container>
     )
 };
