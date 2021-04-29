@@ -34,7 +34,7 @@ export const RsvpForm = () => {
             <Form className="form" onSubmit={handleSubmit(onSubmit)}>
                 <Form.Field>
                     <label>Name</label>
-                    <input placeholder='Enter your name' {...register('name')} />
+                    <input placeholder='Who are you?' {...register('name')} />
                 </Form.Field>
                 <Form.Field>
                     <label>Attendees</label>
@@ -56,7 +56,7 @@ export const RsvpForm = () => {
                 autoHideDuration={6000}
                 onClose={handleToastClose}
             >
-                <Alert severity="success">gotcha thanks &#127773;</Alert>
+                <Alert severity="success">gotcha thanks  &#127773;</Alert>
             </Snackbar>
         </Container>
     )
