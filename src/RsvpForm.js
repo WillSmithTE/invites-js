@@ -53,7 +53,7 @@ export const RsvpForm = () => {
                     horizontal: 'center',
                 }}
                 open={toastOpen}
-                autoHideDuration={2000}
+                autoHideDuration={6000}
                 onClose={handleToastClose}
             >
                 <Alert severity="success">gotcha thanks &#127773;</Alert>
