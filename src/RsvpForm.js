@@ -24,6 +24,10 @@ export const RsvpForm = () => {
                     <label>Attendees</label>
                     <input placeholder='How many peeps are you bringing?' {...register('attendees')} />
                 </Form.Field>
+                <Form.Field>
+                    <label>Comments</label>
+                    <input placeholder='Anything else?' {...register('comments')} />
+                </Form.Field>
 
                 <Button color="blue" type='submit'>Submit</Button>
             </Form>
