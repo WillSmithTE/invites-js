@@ -43,5 +43,11 @@
 }
 
 .container{
-  padding:20px
+  padding:20px;
+  height: 100%;
 }
+
+html, body, #root, .App, ._loading_overlay_wrapper {
+  height: 100%;
+}
+

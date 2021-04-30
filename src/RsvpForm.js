@@ -9,15 +9,19 @@ import { useState } from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import { Alert } from './Alert';
+import LoadingOverlay from 'react-loading-overlay';
 
 export const RsvpForm = () => {
     const { handleSubmit, register, reset } = useForm();
     const [toastOpen, setToastOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const onSubmit = async (rsvp) => {
+        setIsLoading(true);
         await rsvpApi.add(rsvp);
         setToastOpen(true);
         reset();
+        setIsLoading(false);
     };
 
     const handleToastClose = (_, reason) => {
@@ -29,35 +33,42 @@ export const RsvpForm = () => {
 
 
     return (
-        <Container fluid className="container">
-            <Header as='h2'>hey</Header>
-            <Form className="form" onSubmit={handleSubmit(onSubmit)}>
-                <Form.Field>
-                    <label>Name</label>
-                    <input placeholder='Who are you?' {...register('name')} />
-                </Form.Field>
-                <Form.Field>
-                    <label>Attendees</label>
-                    <input placeholder='How many peeps are you bringing?' {...register('attendees')} />
-                </Form.Field>
-                <Form.Field>
-                    <label>Comments</label>
-                    <input placeholder='Anything else?' {...register('comments')} />
-                </Form.Field>
+        <LoadingOverlay
+            active={isLoading}
+            spinner
+            text='Sending your RSVP over the wire...'
+        >
+            <Container fluid className="container">
+                <Header as='h2'>hey</Header>
+                <Form className="form" onSubmit={handleSubmit(onSubmit)}>
+                    <Form.Field>
+                        <label>Name</label>
+                        <input placeholder='Who are you?' {...register('name')} />
+                    </Form.Field>
+                    <Form.Field>
+                        <label>Attendees</label>
+                        <input placeholder='How many peeps are you bringing?' {...register('attendees')} />
+                    </Form.Field>
+                    <Form.Field>
+                        <label>Comments</label>
+                        <input placeholder='Anything else?' {...register('comments')} />
+                    </Form.Field>
 
-                <Button color="blue" type='submit'>Submit</Button>
-            </Form>
-            <Snackbar
-                anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'center',
-                }}
-                open={toastOpen}
-                autoHideDuration={6000}
-                onClose={handleToastClose}
-            >
-                <Alert severity="success">gotcha thanks  &#127773;</Alert>
-            </Snackbar>
-        </Container>
+                    <Button color="blue" type='submit'>Submit</Button>
+                </Form>
+
+                <Snackbar
+                    anchorOrigin={{
+                        vertical: 'top',
+                        horizontal: 'center',
+                    }}
+                    open={toastOpen}
+                    autoHideDuration={6000}
+                    onClose={handleToastClose}
+                >
+                    <Alert severity="success">gotcha thanks  &#127773;</Alert>
+                </Snackbar>
+            </Container>
+        </LoadingOverlay>
     )
 };
